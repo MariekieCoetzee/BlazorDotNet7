@@ -6,7 +6,7 @@ It compliments a series of blog posts on this subject.
 
 Feel free to visit the [web page](https://lively-forest-0ec9c9100.2.azurestaticapps.net/) to try out the features
 
-![Screenshot 2022-11-11 at 12 16 42 pm](https://user-images.githubusercontent.com/20985071/201247925-23a0900f-21a9-43cd-8ea4-ad1c57134bb9.png)
+![Screenshot 2022-11-11 at 12 26 38 pm](https://user-images.githubusercontent.com/20985071/201249509-1d015bb9-85ae-404b-a0d3-e0cc5321f9b3.png)
 
 ## Blazor features in .NET 7
 
