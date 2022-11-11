@@ -1,0 +1,33 @@
+﻿[
+  {
+    "date": "2022-01-06",
+    "temperatureC": 1,
+    "summary": "Freezing",
+    "detail": "Freezing temperatures, no where to hide"
+  },
+  {
+    "date": "2022-01-07",
+    "temperatureC": 14,
+    "summary": "Bracing",
+    "detail": "Brace yourself worst is to come!"
+  },
+  {
+    "date": "2022-01-08",
+    "temperatureC": -13,
+    "summary": "Freezing",
+    "detail": "Freezing temperatures with possibilities of snow"
+  },
+  {
+    "date": "2022-01-09",
+    "temperatureC": 26,
+    "summary": "Balmy",
+    "detail": "Sunshine day on late summer night, gotta love those"
+  },
+  {
+    "date": "2022-01-10",
+    "temperatureC": -2,
+    "summary": "Chilly",
+    "detail": "Chilly possibilities of better weather"
+  }
+]
+

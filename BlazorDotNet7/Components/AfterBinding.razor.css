@@ -1,0 +1,20 @@
+﻿input:focus {
+    outline: none
+}
+
+input {
+    width: 70%;
+    font-size: smaller;
+    color: black;
+    border: none;
+    border-bottom: 2px solid green;
+    background-color: transparent;
+    margin-top: 15px
+}
+
+.weather {
+    font-style: italic;
+    font-size: small;
+    margin-top: 10px;
+    color: lightgray
+}

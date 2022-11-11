@@ -1,0 +1,13 @@
+﻿input:focus {
+    outline:none
+}
+
+input {
+    width: 70%;
+    font-size: smaller;
+    color: gray;
+    border: none;
+    border-bottom: 2px solid blue;
+    background-color: transparent;
+    margin-top: 15px
+}

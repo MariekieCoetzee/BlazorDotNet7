@@ -1,0 +1,53 @@
+﻿@page "/navigationManager"
+@inject IJSRuntime JSRuntime
+
+<h1>Navigation State Test</h1>
+
+<p>Clicking on the back button a Warning message will appear</p>
+
+<input type="text" @bind="ValueChange" @bind:after="ValueHasChanged" />
+
+<button class="btn btn-success" type="button" @onclick="SaveChanges">Save</button>
+
+@if (Modified)
+{
+    <div>
+        <mark>
+            <small>Remember to save changes!</small>
+        </mark>
+    </div>
+}
+<NavigationLock ConfirmExternalNavigation="@(Modified)"
+                OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
+
+
+
+@code {
+        string? ValueChange { get; set; }
+        bool Modified { get; set; }
+
+        private void ValueHasChanged()
+        {
+            Modified = true;
+        }
+
+        private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+        {
+            if (Modified)
+            {
+                var isConfirm = await JSRuntime.InvokeAsync<bool>("confirm", "Unsaved changes detected. Continue and lose changes?");
+
+                if (!isConfirm)
+                {
+                    context.PreventNavigation();
+                }
+            }
+        }
+
+        private void SaveChanges()
+        {
+            Modified = false;
+        }
+
+    }
+

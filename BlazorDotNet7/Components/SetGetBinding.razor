@@ -1,0 +1,11 @@
+﻿
+<input @bind:get="Value" @bind:set="ValueChanged" placeholder="Type value to trigger callback" />
+
+@code {
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+}
+

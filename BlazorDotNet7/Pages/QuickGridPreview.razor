@@ -1,0 +1,98 @@
+﻿@page "/quickGridPreview"
+@inject HttpClient Http
+<div class="quickgrid-page">
+    <h1>QuickGrid Preview</h1>
+    <p>Fantastic docos available <a href="https://aspnet.github.io/quickgridsamples/" target="_blank">here</a> </p>
+    @if (filteredForecast is null)
+    {
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+
+    }
+    else
+    {
+        <div class="quickgrid-wrapper">
+            <QuickGrid Items="@filteredForecast" Theme="fancy-table">
+                <PropertyColumn Property="@(p=> p.Date)" Title="Date" Sortable="true" Format="dd MMM yyyy" />
+                <PropertyColumn Property="@(p=>p.TemperatureC)" Title="Temp C" Sortable="true" Align="Align.Center" >
+                    <ColumnOptions>
+                        <p style="color:gray">
+                            Min temp: <input type="range" @bind="minTempC" @bind:event="oninput" min="-40" max="60" />
+                            <span class="inline-block w-10">@minTempC C</span>
+                        </p>
+                        <p style="color:gray">
+                            Max temp: <input type="range" @bind="maxTempC" @bind:event="oninput" min="-40" max="60" />
+                            <span class="inline-block w-10">@maxTempC C</span>
+                        </p>
+                    </ColumnOptions>
+                </PropertyColumn>
+                <PropertyColumn Property="@(p=>p.TemperatureF)" Title="Temp F" Sortable="true" Align="Align.Center" />
+
+                <TemplateColumn Title="Summary" Align="Align.Left">
+                    @switch (context.Summary)
+                    {
+                        case "Freezing":
+                            <span class="oi oi-command" style="color: aqua; margin-right: 2px"></span> @context.Summary
+                            break;
+                        case "Chilly":
+                            <span class="oi oi-cog" style="color: cornflowerblue; margin-right: 2px"></span> @context.Summary
+                            break;
+                        case "Bracing":
+                            <span class="oi oi-droplet" style="color: blue; margin-right: 2px"></span> @context.Summary
+                            break;
+                        case "Balmy":
+                            <span class="oi oi-sun" style="color: lightgrey; margin-right: 2px"></span> @context.Summary
+                            break;
+                        default:
+                            @context.Summary;
+                            break;
+                    }
+
+                </TemplateColumn>
+                <PropertyColumn Property="@(p=>p.Detail)" Title="Details" Sortable="true" Align="Align.Left" Class="detail">
+                    <ColumnOptions>
+                        <div class="search-box">
+                            <i class="oi oi-magnifying-glass" style="color:grey"></i>
+                            <input class="detail-search" type="search" autofocus @bind="detailFilter" @bind:event="oninput" placeholder="Details..." />
+                        </div>
+                    </ColumnOptions>
+                </PropertyColumn>
+            </QuickGrid>
+        </div>
+    }
+</div>
+@code {
+
+    public IQueryable<WeatherForecast>? forecasts { get; set; }
+        int minTempC = -10;
+        int maxTempC = 40;
+        string detailFilter= string.Empty;
+
+        IQueryable<WeatherForecast> filteredForecast
+        {
+            get
+            {
+                var result = forecasts?.Where(c => c.TemperatureC <= maxTempC && c.TemperatureC >= minTempC);
+                if (result is not null)
+                {
+                    if (!string.IsNullOrEmpty(detailFilter))
+                    {
+                        result = result?.Where(c => c.Detail!.ToLower().Contains(detailFilter.ToLower()));
+                    }
+                }
+                return result!;
+
+            }
+        }
+        protected override async Task OnInitializedAsync()
+        {
+            var weather = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+            forecasts = weather?.AsQueryable();
+        }
+
+
+    }
+

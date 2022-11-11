@@ -1,0 +1,47 @@
+﻿@page "/bindModifiers"
+
+<h1>Bind Modifiers Examples </h1>
+
+<br />
+
+<div class="bindParameters" style="background-color: lightsteelblue;">
+    <h3>Two way binding</h3>
+    <div style="font-size:smaller">
+        <span class="oi oi-data-transfer-download"></span>
+        <span class="bindType">@@bind:get</span>
+        <span> specifies the value to bind </span>
+    </div>
+
+    <div style="font-size:smaller">
+        <span class="oi oi-data-transfer-upload"></span>
+        <span class="bindType">@@bind:set</span>
+        <span> specifies the callback when the value is changed</span>
+    </div>
+
+    <SetGetBinding Value="@SetValue" ValueChanged="@ValueChanged" />
+
+    <p style="font-style:italic; font-size:small; margin-top:10px">bind:get and bind:set should always be used together</p>
+</div>
+
+<br />
+
+<div class="bindParameters" style="background-color: azure; ">
+    <h3>Asynchronise bind after modifier</h3>
+    <div style=" font-size:smaller">
+        <span class="oi oi-rain"></span>
+        <span class="bindType">@@bind:after</span>
+        <span style="margin-bottom:5px"> asynchronise call to update the weather </span>
+    </div>
+    <AfterBinding />
+</div>
+
+
+@code {
+    public string? SetValue { get; set; }
+
+    public void ValueChanged(string value)
+    {
+        SetValue = $"EventCallback triggered -> Value was changed to : {value}";
+    }
+}
+
